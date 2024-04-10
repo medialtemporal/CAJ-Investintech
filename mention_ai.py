@@ -29,6 +29,7 @@ for department in departments:
             syllabi.append(f'{department}/{syllabus}')
 
 
+# Main method to check each syllabus and write output to csv
 def main():
     for syllabus_path in syllabi:
         try:
@@ -41,6 +42,7 @@ def main():
             print('This PDF is not able to be read: ', syllabus_path)
 
 
+# Function to scan syllabus using PdfReader objects
 def scan_syllabus(syllabus_text):
     text = ""
     reader = PdfReader(syllabus_text)
@@ -52,9 +54,10 @@ def scan_syllabus(syllabus_text):
     return text
 
 
+# Function to find keywords in text passed from the syllabus pdf
 def find_keywords(text):
     keywords = []
-    text = text.lower()
+    text = text.lower()  # so the scan is NOT case-sensitive
     for word in words:
         if " " + word + " " in text:  # to avoid, for e.g., "said"
             keywords.append(word)
@@ -65,6 +68,7 @@ def find_keywords(text):
     return keywords
 
 
+# Function to write output to csv files
 def write_to_csv(syllabus_path, keywords, num_chars):
     with open('ai_data.csv', 'a') as csv_file:
         writer = csv.writer(csv_file)
